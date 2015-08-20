@@ -14,7 +14,8 @@ def http_get(url, options={})
   request = Net::HTTP::Get.new(uri.request_uri)
   ApiAuth.sign!(request, options[:access_key_id], options[:access_secret_key])
 
-  users = http.request(request)
+  response = http.request(request)
+  users = response.body
 
   if response.code.to_i > 300
     raise StandardError, <<-ERROR
@@ -25,7 +26,7 @@ def http_get(url, options={})
     Response Body: #{response.body}
     ERROR
   end
-  users
+  puts users
 end
 
 http_get(URL, OPTIONS)
