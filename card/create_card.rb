@@ -3,18 +3,18 @@ require 'time'
 require 'api-auth'
 require 'json'
 
-URL = 'https://<instance name>.mingle-api.thoughtworks.com/api/v2/projects/test_project/cards.xml'
+URL = 'https://<INSTANCE NAME>.mingle-api.thoughtworks.com/api/v2/projects/<PROJECT IDENTIFIER>/cards.xml'
 OPTIONS = {:access_key_id => '<MINGLE USERNAME>', :access_secret_key => '<MINGLE HMAC KEY>'}
-PARAMS = { 
-  :card => { 
-    :type => "Story", :name => "Test Story Card" 
+PARAMS = {
+  :card => {
+    :card_type_name => "Story", :name => "Test Story Card"
     }
   }
 
 def http_post(url, params, options={})
   uri = URI.parse(url)
   http = Net::HTTP.new(uri.host, uri.port)
-  http.use_ssl = true 
+  http.use_ssl = true
   body = params.to_json
 
   request = Net::HTTP::Post.new(uri.request_uri)
@@ -36,8 +36,8 @@ def http_post(url, params, options={})
     Response Body: #{response.body}
     ERROR
   end
-  
-  card 
+
+  card
 end
 
 http_post(URL, PARAMS, OPTIONS)
