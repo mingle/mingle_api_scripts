@@ -3,9 +3,9 @@ require 'time'
 require 'api-auth'
 require 'json'
 
-URL = 'https://<instance name>.mingle-api.thoughtworks.com/api/v2/projects/test_project/cards.xml'
-OPTIONS = {:access_key_id => '<MINGLE USERNAME>', :access_secret_key => '<MINGLE HMAC KEY>'}
-PARAMS = { :view => "New View" }
+URL = 'https://<MINGLE INSTANCE>.mingle-api.thoughtworks.com/api/v2/projects/<PROJECT>/cards.xml'
+OPTIONS = {:access_key_id => '<SIGN IN NAME>', :access_secret_key => '<TOKEN>'}
+PARAMS = { :view => "All" }
 
 def http_get(url, params, options={})
   uri = URI.parse(url)
@@ -28,7 +28,7 @@ def http_get(url, params, options={})
     ERROR
   end
   
-  cards 
+  puts cards 
 end
 
 http_get(URL, PARAMS, OPTIONS)
