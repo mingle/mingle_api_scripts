@@ -33,6 +33,7 @@ def http_get(url, params, options={})
     Response Body: #{response.body}
     ERROR
   end
+p response.body
 end
 
 http_get(URL, PARAMS, OPTIONS)
