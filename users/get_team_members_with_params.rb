@@ -8,7 +8,6 @@ require 'nokogiri'
 URL = 'https://<instance>.mingle-api.thoughtworks.com/api/v2/projects/<project identifier>/users.xml'
 OPTIONS = {:access_key_id => "<username>", :access_secret_key => '<HMAC key>'}
 
-
 def http_get(url, options={})
   uri = URI.parse(url)
   http = Net::HTTP.new(uri.host, uri.port)
@@ -33,11 +32,15 @@ end
 
 def extract_admin_users
   all_users = Nokogiri::XML(http_get(URL, OPTIONS))
-  all_users.search('//user').each do |user|
+  all_users.search('//projects_member').each do |user|
     admin_user = user.xpath('admin')
     active_user = user.xpath('activated')
-    if admin_user.text == 'true' && active_user.text == 'true'
-      puts user
+    if admin_user.text == 'true'
+  active_user = user.xpath('user/activated')
+  if active_user.text == 'true'
+    user_name= user.xpath('user/name')
+    puts user_name.text
+  end
     end
   end
 end
